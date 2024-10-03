@@ -4,10 +4,71 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <script type="module" src="/main.js"></script>
+    <script type="module" src="/src/main.js"></script>
     <title>Battleship</title>
   </head>
   <body>
-    Hello!
+    <div class="app">
+      <header class="header">
+        <h1 class="app-name">#BATTLESHIP</h1>
+        <p class="game-mode-text"></p>
+      </header>
+
+      <div class="content">
+        <!-- HOME SCREEN -->
+        <h2 class="top-header">Welcome to battleship</h2>
+        <button class="pvp-button">Player vs Player</button>
+        <button class="pvc-button">Player vs Computer</button>
+
+        <!-- GAME SCREEN -->
+        <div class="upper-screen">
+          <div class="upper-player-board">
+            <div class="upper-board-number-column"></div>
+            <div class="upper-board-letter-row"></div>
+            <!-- Make board with JS -->
+          </div>
+          <div class="upper-player-score">
+            <p class="upper-player-name"></p>
+          </div>
+          <div class="upper-player-ships">
+            <div class="upper-player-ship1"></div>
+            <div class="upper-player-ship2"></div>
+            <div class="upper-player-ship3"></div>
+            <div class="upper-player-ship4"></div>
+            <div class="upper-player-ship5"></div>
+          </div>
+        </div>
+
+        <div class="lower-screen">
+          <div class="lower-player-board">
+            <div class="lower-board-number-column"></div>
+            <div class="lower-board-letter-row"></div>
+            <!-- Make board with JS -->
+          </div>
+          <div class="lower-player-score">
+            <p class="lower-player-name"></p>
+          </div>
+          <div class="lower-player-ships">
+            <div class="lower-player-ship1"></div>
+            <div class="lower-player-ship2"></div>
+            <div class="lower-player-ship3"></div>
+            <div class="lower-player-ship4"></div>
+            <div class="lower-player-ship5"></div>
+          </div>
+        </div>
+
+        <p class="player-turn-message"></p>
+
+        <!-- GAME OVER SCREEN -->
+        <h2 class="top-header2">Game Over</h2>
+        <h2 class="bottom-header2">Winner: X</h2>
+        <button class="replay-button">Play again</button>
+      </div>
+
+      <footer class="footer">
+        <p class="copyright"></p>
+        <i class="github-icon"></i>
+      </footer>
+    </div>
   </body>
 </html>
