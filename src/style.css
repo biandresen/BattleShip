@@ -1,0 +1,212 @@
+/* RESET */
+*,
+h1,
+h2,
+h3,
+h4,
+p,
+div,
+button,
+header,
+footer {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary-color: #1e3e62;
+  --secondary-color: #ff6500;
+  --text-color: white;
+  --detail-color: black;
+  --accept-color: green;
+  --warning-color: yellow;
+  --error-color: red;
+  --ship-color: gray;
+
+  --small-font-size: 0.8rem;
+  --medium-font-size: 1.2rem;
+  --big-font-size: 1.8rem;
+  --gigantic-font-size: 3.6rem;
+
+  --text-outline: -2px -2px 0px black, /* Top-left shadow */ 1px -1px 0px black,
+    /* Top-right shadow */ -2px 2px 0px black,
+    /* Bottom-left shadow */ 2px 2px 0px black; /* Bottom-right shadow */
+}
+
+body {
+  background: black;
+  /* width: 100vw;
+  height: 100vh; */
+  display: grid;
+  place-content: center;
+}
+
+.app {
+  background: var(--primary-color);
+  display: grid;
+  grid-template-rows: 1fr 12fr 1fr;
+  width: 25vw;
+  height: 80vh;
+}
+
+.header {
+  grid-row: 1 / 2;
+  background: inherit;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.app-name {
+  color: var(--secondary-color);
+  font-size: var(--big-font-size);
+  font-weight: 800;
+  padding-left: 20px;
+}
+.game-mode-text {
+  color: var(--secondary-color);
+  font-size: var(--medium-font-size);
+  font-weight: 500;
+  padding-right: 20px;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  grid-row: 2 / 3;
+  display: grid;
+  grid-template-rows: 0.45fr 0.45fr 0.1fr;
+  grid-template-columns: 0.7fr 0.3fr;
+}
+.content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url(../public/Battleship.png);
+  opacity: 0.4;
+  z-index: -1;
+}
+/* HOME SCREEN */
+.top-header,
+.bottom-header {
+  grid-row: 1 / 2;
+  grid-column: 1 / 3;
+  justify-self: center;
+  text-align: center;
+  color: white;
+  font-size: var(--gigantic-font-size);
+  text-shadow: var(--text-outline);
+  font-weight: 800;
+  margin-top: 30px;
+}
+.top-header {
+  display: none;
+}
+.pvp-button,
+.pvc-button,
+.replay-button {
+  grid-row: 2 / 3;
+  grid-column: 1 / 3;
+  color: var(--text-color);
+  font-size: var(--big-font-size);
+  font-weight: 800;
+  text-shadow: var(--text-outline);
+  background: var(--secondary-color);
+  border: 6px solid black;
+  border-radius: 8px;
+  outline: transparent;
+  height: 70px;
+  /* width: clamp(80vw, 250px, 100px); */
+  width: 350px;
+  justify-self: center;
+}
+.pvc-button {
+  margin-top: 100px;
+}
+.pvp-button,
+.pvc-button {
+  display: none;
+}
+/* GAME SCREEN */
+.upper-player-board {
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+}
+.upper-player-score {
+  grid-row: 1 / 2;
+  grid-column: 2 / 3;
+  display: grid;
+  grid-template-rows: 0.2fr 0.8fr;
+  justify-content: center;
+}
+.upper-player-name {
+  grid-row: 1 / 2;
+}
+.upper-player-ships {
+  grid-row: 2 / 3;
+}
+.lower-player-board {
+  grid-row: 2 / 3;
+  grid-column: 1 / 2;
+}
+.lower-player-score {
+  grid-row: 2 / 3;
+  grid-column: 2 / 3;
+  display: grid;
+  grid-template-rows: 0.2fr 0.8fr;
+  justify-content: center;
+}
+.lower-player-name {
+  grid-row: 1 / 2;
+}
+.lower-player-ships {
+  grid-row: 2 / 3;
+}
+.player-turn-message {
+  grid-row: 3 / 4;
+  grid-column: 1 / 3;
+}
+.ship {
+  font-size: var(--medium-font-size);
+}
+.player-name {
+  margin-top: 20px;
+  font-size: var(--big-font-size);
+}
+
+/* GAME OVER SCREEN */
+.bottom-header {
+  grid-row: 2 / 3;
+  display: none;
+}
+.replay-button {
+  grid-row: 3 / 4;
+  display: none;
+}
+
+.footer {
+  grid-row: 3 / 4;
+  background: inherit;
+  color: var(--text-color);
+  position: sticky;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  font-size: 10px;
+}
+.fa-github {
+  color: var(--text-color);
+  font-size: 25px;
+  margin: 0 0 0 5px;
+  transition: transform 0.3s ease-in-out;
+}
+.fa-github:hover {
+  transform: scale(1.2);
+}
+.copyright-text {
+  font-size: var(--small-font-size);
+}
+/* @media (min-width: 1000px) { */
