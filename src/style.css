@@ -137,7 +137,7 @@ body {
   grid-column: 2 / 3;
   display: grid;
   grid-template-rows: 0.2fr 0.8fr;
-  justify-content: center;
+  justify-content: start;
 }
 .upper-player-name {
   grid-row: 1 / 2;
@@ -154,7 +154,7 @@ body {
   grid-column: 2 / 3;
   display: grid;
   grid-template-rows: 0.2fr 0.8fr;
-  justify-content: center;
+  justify-content: start;
 }
 .lower-player-name {
   grid-row: 1 / 2;
@@ -170,8 +170,8 @@ body {
   font-size: var(--medium-font-size);
 }
 .player-name {
-  margin-top: 20px;
-  font-size: var(--big-font-size);
+  margin-top: 5px;
+  font-size: var(--medium-font-size);
 }
 
 .upper-board-area {
@@ -183,6 +183,7 @@ body {
   width: 320px;
   height: 320px;
   justify-self: center;
+  margin-top: 5px;
 }
 .upper-board-letter-row {
   grid-row: 1 / 2;
@@ -201,6 +202,7 @@ body {
   width: 320px;
   height: 320px;
   justify-self: center;
+  margin-top: 5px;
 }
 .lower-board-letter-row {
   grid-row: 1 / 2;
@@ -239,7 +241,7 @@ body {
   display: grid;
   grid-template-columns: repeat(10, 1fr); /* 10 equal columns */
   grid-template-rows: repeat(10, 1fr); /* 10 equal rows */
-  gap: 2px; /* Optional: Space between cells */
+  /* gap: 1px; */
   border: 1px solid black;
 }
 .matrix-item {
@@ -247,12 +249,12 @@ body {
   flex: 1 1 1;
   justify-content: center;
   align-items: center;
-  background-color: lightgray;
-  border: 1px solid #ccc;
+  background: var(--primary-color);
+  border: 1px solid var(--primary-color-highlight);
 }
 .dot {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   background-color: black;
   border-radius: 50%; /* Makes the dot circular */
 }
