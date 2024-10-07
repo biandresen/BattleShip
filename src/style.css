@@ -16,6 +16,7 @@ footer {
 
 :root {
   --primary-color: #1e3e62;
+  --primary-color-highlight: #3c7cc3;
   --secondary-color: #ff6500;
   --text-color: white;
   --detail-color: black;
@@ -76,7 +77,7 @@ body {
   grid-row: 2 / 3;
   display: grid;
   grid-template-rows: 0.45fr 0.45fr 0.1fr;
-  grid-template-columns: 0.7fr 0.3fr;
+  grid-template-columns: 0.95fr 0.05fr;
 }
 .content::before {
   content: "";
@@ -131,10 +132,6 @@ body {
   display: none;
 }
 /* GAME SCREEN */
-.upper-player-board {
-  grid-row: 1 / 2;
-  grid-column: 1 / 2;
-}
 .upper-player-score {
   grid-row: 1 / 2;
   grid-column: 2 / 3;
@@ -148,7 +145,7 @@ body {
 .upper-player-ships {
   grid-row: 2 / 3;
 }
-.lower-player-board {
+.lower-board-area {
   grid-row: 2 / 3;
   grid-column: 1 / 2;
 }
@@ -175,6 +172,89 @@ body {
 .player-name {
   margin-top: 20px;
   font-size: var(--big-font-size);
+}
+
+.upper-board-area {
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+  display: grid;
+  grid-template-columns: 0.09fr 0.9fr;
+  grid-template-rows: 0.09fr 0.9fr;
+  width: 320px;
+  height: 320px;
+  justify-self: center;
+}
+.upper-board-letter-row {
+  grid-row: 1 / 2;
+  grid-column: 2 / 3;
+}
+.upper-board-number-column {
+  grid-row: 2 / 3;
+  grid-column: 1 / 2;
+}
+.lower-board-area {
+  grid-row: 2 / 3;
+  grid-column: 1 / 2;
+  display: grid;
+  grid-template-columns: 0.09fr 0.9fr;
+  grid-template-rows: 0.09fr 0.9fr;
+  width: 320px;
+  height: 320px;
+  justify-self: center;
+}
+.lower-board-letter-row {
+  grid-row: 1 / 2;
+  grid-column: 2 / 3;
+}
+.lower-board-number-column {
+  grid-row: 2 / 3;
+  grid-column: 1 / 2;
+}
+.coordinate-matrix {
+  font-size: var(--medium-font-size);
+  font-weight: 800;
+  border: 1px solid black;
+  flex: 1;
+  background: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.coordinate-matrix.even {
+  background: var(--primary-color-highlight);
+}
+.upper-board-letter-row,
+.lower-board-letter-row {
+  display: flex;
+}
+.upper-board-number-column,
+.lower-board-number-column {
+  display: flex;
+  flex-direction: column;
+}
+.upper-player-board,
+.lower-player-board {
+  grid-row: 2 / 3;
+  grid-column: 2 / 3;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr); /* 10 equal columns */
+  grid-template-rows: repeat(10, 1fr); /* 10 equal rows */
+  gap: 2px; /* Optional: Space between cells */
+  border: 1px solid black;
+}
+.matrix-item {
+  display: flex;
+  flex: 1 1 1;
+  justify-content: center;
+  align-items: center;
+  background-color: lightgray;
+  border: 1px solid #ccc;
+}
+.dot {
+  width: 6px;
+  height: 6px;
+  background-color: black;
+  border-radius: 50%; /* Makes the dot circular */
 }
 
 /* GAME OVER SCREEN */
