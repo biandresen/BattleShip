@@ -77,7 +77,7 @@ body {
   grid-row: 2 / 3;
   display: grid;
   grid-template-rows: 0.45fr 0.45fr 0.1fr;
-  grid-template-columns: 0.95fr 0.05fr;
+  grid-template-columns: 0.9fr 0.3fr;
 }
 .content::before {
   content: "";
@@ -136,14 +136,47 @@ body {
   grid-row: 1 / 2;
   grid-column: 2 / 3;
   display: grid;
-  grid-template-rows: 0.2fr 0.8fr;
-  justify-content: center;
+  grid-template-rows: 0.1fr 0.8fr;
 }
 .upper-player-name {
   grid-row: 1 / 2;
 }
 .upper-player-ships {
   grid-row: 2 / 3;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 10px 10px 0 0;
+}
+.ship {
+  border: 3px solid rgb(182, 182, 182);
+  height: 11.5%;
+  background: rgba(128, 128, 128, 0.5);
+  font-size: var(--medium-font-size);
+  border-top-right-radius: 100%;
+  border-bottom-right-radius: 100%;
+  border-top-left-radius: 40%;
+  border-bottom-left-radius: 40%;
+}
+.upper-player-ship1,
+.lower-player-ship1 {
+  width: 100%;
+}
+.upper-player-ship2,
+.lower-player-ship2 {
+  width: 80%;
+}
+.upper-player-ship3,
+.lower-player-ship3 {
+  width: 60%;
+}
+.upper-player-ship4,
+.lower-player-ship4 {
+  width: 60%;
+}
+.upper-player-ship5,
+.lower-player-ship5 {
+  width: 40%;
 }
 .lower-board-area {
   grid-row: 2 / 3;
@@ -153,25 +186,25 @@ body {
   grid-row: 2 / 3;
   grid-column: 2 / 3;
   display: grid;
-  grid-template-rows: 0.2fr 0.8fr;
-  justify-content: center;
+  grid-template-rows: 0.1fr 0.8fr;
 }
 .lower-player-name {
   grid-row: 1 / 2;
 }
 .lower-player-ships {
   grid-row: 2 / 3;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 10px 10px 0 0;
 }
 .player-turn-message {
   grid-row: 3 / 4;
   grid-column: 1 / 3;
 }
-.ship {
-  font-size: var(--medium-font-size);
-}
 .player-name {
-  margin-top: 20px;
   font-size: var(--big-font-size);
+  font-weight: 800;
 }
 
 .upper-board-area {
@@ -239,7 +272,6 @@ body {
   display: grid;
   grid-template-columns: repeat(10, 1fr); /* 10 equal columns */
   grid-template-rows: repeat(10, 1fr); /* 10 equal rows */
-  gap: 2px; /* Optional: Space between cells */
   border: 1px solid black;
 }
 .matrix-item {
@@ -247,12 +279,12 @@ body {
   flex: 1 1 1;
   justify-content: center;
   align-items: center;
-  background-color: lightgray;
-  border: 1px solid #ccc;
+  background-color: var(--primary-color-highlight);
+  border: 1px solid var(--primary-color);
 }
 .dot {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   background-color: black;
   border-radius: 50%; /* Makes the dot circular */
 }
