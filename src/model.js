@@ -1,1 +1,3 @@
-//* MODEL (GAME LOGIC)
+export function Model() {
+  function initializeGame() {}
+}
