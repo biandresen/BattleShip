@@ -1,5 +1,9 @@
 import "./style.css";
-import { createBoards } from "./viewModel";
+import { ViewModel } from "./viewModel";
+import { Model } from "./model";
 
 // createBoards();
 
+window.onload = () => {
+  ViewModel().displayHomeScreen();
+};
