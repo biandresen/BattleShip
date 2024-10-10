@@ -121,9 +121,16 @@ body {
   border-radius: 8px;
   outline: transparent;
   height: 70px;
-  /* width: clamp(80vw, 250px, 100px); */
   width: 350px;
   justify-self: center;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.pvp-button:hover,
+.pvc-button:hover,
+.replay-button:hover {
+  transform: scale(1.1);
+  transition: 0.2s ease;
 }
 .pvc-button {
   margin-top: 100px;
