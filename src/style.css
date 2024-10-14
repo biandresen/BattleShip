@@ -38,7 +38,7 @@ footer {
 body {
   background: black;
   /* width: 100vw;
-  height: 100vh; */
+height: 100vh; */
   display: grid;
   place-content: center;
 }
@@ -120,16 +120,11 @@ body {
   border-radius: 8px;
   outline: transparent;
   height: 70px;
+  /* width: clamp(80vw, 250px, 100px); */
   width: 350px;
   justify-self: center;
+  transition: 0.3s ease;
   cursor: pointer;
-  transition: 0.2s ease;
-}
-.pvp-button:hover,
-.pvc-button:hover,
-.replay-button:hover {
-  transform: scale(1.1);
-  transition: 0.2s ease;
 }
 .pvc-button {
   margin-top: 100px;
@@ -138,12 +133,19 @@ body {
 .pvc-button {
   display: none;
 }
+.pvp-button:hover,
+.pvc-button:hover,
+.replay-button:hover {
+  transform: scale(1.1);
+  transition: 0.3s ease;
+}
 /* GAME SCREEN */
 .upper-player-score {
   grid-row: 1 / 2;
   grid-column: 2 / 3;
   display: grid;
   grid-template-rows: 0.1fr 0.8fr;
+  display: none;
 }
 .upper-player-name {
   grid-row: 1 / 2;
@@ -194,6 +196,7 @@ body {
   grid-column: 2 / 3;
   display: grid;
   grid-template-rows: 0.1fr 0.8fr;
+  display: none;
 }
 .lower-player-name {
   grid-row: 1 / 2;
@@ -223,6 +226,7 @@ body {
   width: 320px;
   height: 320px;
   justify-self: center;
+  display: none;
 }
 .upper-board-letter-row {
   grid-row: 1 / 2;
@@ -241,6 +245,7 @@ body {
   width: 320px;
   height: 320px;
   justify-self: center;
+  display: none;
 }
 .lower-board-letter-row {
   grid-row: 1 / 2;
@@ -294,12 +299,6 @@ body {
   height: 7px;
   background-color: black;
   border-radius: 50%; /* Makes the dot circular */
-}
-.player-score {
-  display: none;
-}
-.player-board-area {
-  display: none;
 }
 
 /* GAME OVER SCREEN */

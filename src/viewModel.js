@@ -10,9 +10,11 @@ export function ViewModel() {
   const replayButton = document.querySelector(".replay-button");
   const upperPlayerName = document.querySelector(".upper-player-name");
   const upperPlayerScore = document.querySelector(".upper-player-score");
+  const upperBoardArea = document.querySelector(".upper-board-area");
   const lowerPlayerName = document.querySelector(".lower-player-name");
   const lowerPlayerScore = document.querySelector(".lower-player-score");
   const upperPlayerBoard = document.querySelector(".upper-player-board");
+  const lowerBoardArea = document.querySelector(".lower-board-area");
   const upperBoardNumberColumn = document.querySelector(
     ".upper-board-number-column"
   );
@@ -47,13 +49,20 @@ export function ViewModel() {
     pvcButton.style.display = "block";
   }
 
-  function displayGameScreen() {}
+  function displayGameScreen() {
+    upperBoardArea.style.display = "grid";
+    lowerBoardArea.style.display = "grid";
+    upperPlayerScore.style.display = "grid";
+    lowerPlayerScore.style.display = "grid";
+    createBoards();
+  }
 
   function bindEvents() {
     pvpButton.addEventListener("click", () => {
       gameModeText.textContent = "Mode: PvP";
+      upperPlayerName.textContent = "Player 2";
       clearContent();
-      // displayGameScreen();
+      displayGameScreen();
     });
   }
 
