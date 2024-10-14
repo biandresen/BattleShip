@@ -6,4 +6,5 @@ import { Model } from "./model";
 
 window.onload = () => {
   ViewModel().displayHomeScreen();
+  ViewModel().bindEvents();
 };
