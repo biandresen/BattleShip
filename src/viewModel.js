@@ -34,11 +34,27 @@ export function ViewModel() {
   const lowerPlayerShip3 = document.querySelector(".lower-player-ship3");
   const lowerPlayerShip4 = document.querySelector(".lower-player-ship4");
   const lowerPlayerShip5 = document.querySelector(".lower-player-ship5");
+  const contentContainer = document.querySelector(".content");
 
+  function clearContent() {
+    for (let i = 0; i < contentContainer.children.length; i++) {
+      contentContainer.children[i].style.display = "none";
+    }
+  }
   function displayHomeScreen() {
     topHeader.style.display = "block";
     pvpButton.style.display = "block";
     pvcButton.style.display = "block";
+  }
+
+  function displayGameScreen() {}
+
+  function bindEvents() {
+    pvpButton.addEventListener("click", () => {
+      gameModeText.textContent = "Mode: PvP";
+      clearContent();
+      // displayGameScreen();
+    });
   }
 
   function createBoards() {
@@ -82,5 +98,6 @@ export function ViewModel() {
   }
   return {
     displayHomeScreen,
+    bindEvents,
   };
 }
