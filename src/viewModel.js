@@ -57,6 +57,17 @@ export function ViewModel() {
     createBoards();
   }
 
+  function changeShipColor(ship) {
+    ship.classList.add("destroyed-ship");
+  }
+
+  function handleShipHit(ship) {
+    ship.hit();
+    if (ship.destroyed) {
+      changeShipColor(ship);
+    }
+  }
+
   function bindEvents() {
     pvpButton.addEventListener("click", () => {
       gameModeText.textContent = "Mode: PvP";
