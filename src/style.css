@@ -187,6 +187,9 @@ height: 100vh; */
 .lower-player-ship5 {
   width: 40%;
 }
+.destroyed-ship {
+  background: var(--error-color);
+}
 .lower-board-area {
   grid-row: 2 / 3;
   grid-column: 1 / 2;
