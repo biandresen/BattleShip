@@ -1,14 +1,37 @@
 //* VIEW MODEL - INTERFACE (UI)
 import { Model } from "./model";
-const CARRIER_SIZE = 5;
-const BATTLESHIP_SIZE = 4;
-const CRUISER_SIZE = 3;
-const SUBMARINE_SIZE = 3;
-const DESTROYER_SIZE = 2;
-let arrangeMode = false;
+const CARRIER = "Carrier";
+const BATTLESHIP = "Battleship";
+const CRUISER = "Cruiser";
+const SUBMARINE = "Submarine";
+const DESTROYER = "Destroyer";
+const CARRIER_LIFE = 5;
+const BATTLESHIP_LIFE = 4;
+const CRUISER_LIFE = 3;
+const SUBMARINE_LIFE = 3;
+const DESTROYER_LIFE = 2;
 
 export function ViewModel() {
-  //* API for elements
+  //* #region API for Elements
+  const carrierColor = getComputedStyle(
+    document.documentElement
+  ).getPropertyValue("--carrier-color");
+  const battleshipColor = getComputedStyle(
+    document.documentElement
+  ).getPropertyValue("--battleship-color");
+  const cruiserColor = getComputedStyle(
+    document.documentElement
+  ).getPropertyValue("--cruiser-color");
+  const submarineColor = getComputedStyle(
+    document.documentElement
+  ).getPropertyValue("--submarine-color");
+  const destroyerColor = getComputedStyle(
+    document.documentElement
+  ).getPropertyValue("--destroyer-color");
+  const mainColor = getComputedStyle(document.documentElement).getPropertyValue(
+    "--primary-color-highlight"
+  );
+
   const gameModeText = document.querySelector(".game-mode-text");
   const playerTurnMessage = document.querySelector(".player-turn-message");
   const topHeader = document.querySelector(".top-header");
@@ -49,25 +72,66 @@ export function ViewModel() {
   const lowerPlayerSquares = [];
   const occupiedSquares = [];
 
-  const shipInputBox = document.querySelector(".ship-input-box");
-  const lowerShipInputButton1 = document.querySelector(
-    ".lower-ship-input-button1"
+  const player1ArrangeDoneButton = document.querySelector(
+    ".player1-arrange-done-button"
+  );
+  const player1ShipArrangeButton = document.querySelector(
+    ".player1-ship-arrange-button"
   );
   const contentContainer = document.querySelector(".content");
+  // #endregion
+  //* #region API for Ships
 
-  //* API for Ships
-  const player1Ship1 = Model().createShip("carrier", 5, "blue");
-  const player1Ship2 = Model().createShip("battleship", 4, "red");
-  const player1Ship3 = Model().createShip("cruiser", 3, "green");
-  const player1Ship4 = Model().createShip("submarine", 3, "orange");
-  const player1Ship5 = Model().createShip("destroyer", 2, "yellow");
-  const player2Ship1 = Model().createShip("carrier", 5, "blue");
-  const player2Ship2 = Model().createShip("battleship", 4, "red");
-  const player2Ship3 = Model().createShip("cruiser", 3, "green");
-  const player2Ship4 = Model().createShip("submarine", 3, "orange");
-  const player2Ship5 = Model().createShip("destroyer", 2, "yellow");
-  //* API END
-  //* -----------------------------------------------------------------------------
+  const player1Ship1 = Model().createShip(CARRIER, CARRIER_LIFE, carrierColor);
+  const player1Ship2 = Model().createShip(
+    BATTLESHIP,
+    BATTLESHIP_LIFE,
+    battleshipColor
+  );
+  const player1Ship3 = Model().createShip(CRUISER, CRUISER_LIFE, cruiserColor);
+  const player1Ship4 = Model().createShip(
+    SUBMARINE,
+    SUBMARINE_LIFE,
+    submarineColor
+  );
+  const player1Ship5 = Model().createShip(
+    DESTROYER,
+    DESTROYER_LIFE,
+    destroyerColor
+  );
+  const player2Ship1 = Model().createShip(CARRIER, CARRIER_LIFE, carrierColor);
+  const player2Ship2 = Model().createShip(
+    BATTLESHIP,
+    BATTLESHIP_LIFE,
+    battleshipColor
+  );
+  const player2Ship3 = Model().createShip(CARRIER, CARRIER_LIFE, cruiserColor);
+  const player2Ship4 = Model().createShip(
+    SUBMARINE,
+    SUBMARINE_LIFE,
+    submarineColor
+  );
+  const player2Ship5 = Model().createShip(
+    DESTROYER,
+    DESTROYER_LIFE,
+    destroyerColor
+  );
+  const allPlayer1Ships = [
+    player1Ship1,
+    player1Ship2,
+    player1Ship3,
+    player1Ship4,
+    player1Ship5,
+  ];
+  const allPlayer2Ships = [
+    player2Ship1,
+    player2Ship2,
+    player2Ship3,
+    player2Ship4,
+    player2Ship5,
+  ];
+  // #endregion
+
   function bindEvents() {
     pvpButton.addEventListener("click", () => {
       gameModeText.textContent = "Mode: PvP";
@@ -76,13 +140,17 @@ export function ViewModel() {
       displayGameScreen();
       shipArrangement();
     });
-    lowerShipInputButton1.addEventListener("click", () => {
-      // clearArrangement();
+    player1ShipArrangeButton.addEventListener("click", () => {
+      clearShipArrangement(1);
       placeShip(player1Ship1);
       placeShip(player1Ship2);
       placeShip(player1Ship3);
       placeShip(player1Ship4);
       placeShip(player1Ship5);
+      player1ArrangeDoneButton.style.display = "flex";
+      // for (let i = 0; i < allPlayer1Ships.length; i++) {
+      //   console.log(allPlayer1Ships[i].boardPlacement);
+      // }
     });
   }
 
@@ -175,14 +243,26 @@ export function ViewModel() {
   function shipArrangementPlayer1() {
     playerTurnMessage.textContent = "PLAYER 1 - ARRANGE SHIPS";
     upperBoardArea.style.opacity = "50%";
-    shipInputBox.style.display = "flex";
+    player1ShipArrangeButton.style.display = "flex";
+  }
+
+  function clearShipArrangement(player) {
+    if (player == 1) {
+      allPlayer1Ships.forEach((ship) => {
+        ship.boardPlacement = [];
+      });
+      lowerPlayerSquares.forEach((square) => {
+        square.style.background = mainColor;
+      });
+    }
+    //Reset the occupied square list each clear
+    occupiedSquares.length = 0;
   }
 
   function placeShip(ship) {
     ship.boardPlacement = calculatePlacement(ship);
     while (positionIsTaken(ship)) {
       ship.boardPlacement = calculatePlacement(ship);
-      console.log("!!POSITION TAKEN!!");
     }
     occupiedSquares.push(ship.boardPlacement);
     setShipPlacementColors(ship.boardPlacement, ship.color);

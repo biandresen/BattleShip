@@ -30,6 +30,11 @@ footer {
   --big-font-size: 1.8rem;
   --gigantic-font-size: 3.6rem;
 
+  --carrier-color: blue;
+  --battleship-color: purple;
+  --cruiser-color: green;
+  --submarine-color: magenta;
+  --destroyer-color: #ff6500;
   --text-outline: -2px -2px 0px black, /* Top-left shadow */ 1px -1px 0px black,
     /* Top-right shadow */ -2px 2px 0px black,
     /* Bottom-left shadow */ 2px 2px 0px black; /* Bottom-right shadow */
@@ -159,8 +164,7 @@ height: 100vh; */
 }
 .ship {
   border: 3px solid rgb(182, 182, 182);
-  height: 11.5%;
-  background: rgba(128, 128, 128, 0.5);
+  height: 25px;
   font-size: var(--medium-font-size);
   border-top-right-radius: 100%;
   border-bottom-right-radius: 100%;
@@ -170,22 +174,27 @@ height: 100vh; */
 .upper-player-ship1,
 .lower-player-ship1 {
   width: 100%;
+  background: var(--carrier-color);
 }
 .upper-player-ship2,
 .lower-player-ship2 {
   width: 80%;
+  background: var(--battleship-color);
 }
 .upper-player-ship3,
 .lower-player-ship3 {
   width: 60%;
+  background: var(--cruiser-color);
 }
 .upper-player-ship4,
 .lower-player-ship4 {
   width: 60%;
+  background: var(--submarine-color);
 }
 .upper-player-ship5,
 .lower-player-ship5 {
   width: 40%;
+  background: var(--destroyer-color);
 }
 .destroyed-ship {
   background: var(--error-color);
@@ -211,13 +220,42 @@ height: 100vh; */
   gap: 5px;
   margin: 10px 10px 0 0;
 }
+.arrange-button-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  gap: 5px;
+}
+.player1-ship-arrange-button,
+.player1-arrange-done-button {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  justify-self: start;
+  color: var(--text-color);
+  font-size: var(--medium-font-size);
+  font-weight: 800;
+  text-shadow: var(--text-outline);
+  background: var(--secondary-color);
+  border: 3px solid black;
+  border-radius: 8px;
+  outline: transparent;
+  height: 45px;
+  width: 90%;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
 .player-turn-message {
+  display: none;
   grid-row: 3 / 4;
   grid-column: 1 / 2;
   font-size: var(--medium-font-size);
   font-weight: 900;
   color: var(--text-color);
   justify-self: center;
+  background: var(--primary-color);
+  padding: 4px;
+  border-radius: 5px;
 }
 .player-name {
   font-size: var(--big-font-size);
@@ -341,11 +379,6 @@ height: 100vh; */
   font-size: var(--small-font-size);
 }
 /* @media (min-width: 1000px) { */
-
-.ship-input-box {
-  width: 100%;
-  display: none;
-}
 .ship-input {
   width: inherit;
 }
