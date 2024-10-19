@@ -58,101 +58,15 @@ export function ViewModel() {
   const player1Ship1 = Model().createShip("carrier", 5, "blue");
   const player1Ship2 = Model().createShip("battleship", 4, "red");
   const player1Ship3 = Model().createShip("cruiser", 3, "green");
-  const player1Ship4 = Model().createShip("submarine", 3, "gray");
+  const player1Ship4 = Model().createShip("submarine", 3, "orange");
   const player1Ship5 = Model().createShip("destroyer", 2, "yellow");
   const player2Ship1 = Model().createShip("carrier", 5, "blue");
   const player2Ship2 = Model().createShip("battleship", 4, "red");
   const player2Ship3 = Model().createShip("cruiser", 3, "green");
-  const player2Ship4 = Model().createShip("submarine", 3, "gray");
+  const player2Ship4 = Model().createShip("submarine", 3, "orange");
   const player2Ship5 = Model().createShip("destroyer", 2, "yellow");
   //* API END
   //* -----------------------------------------------------------------------------
-
-  function clearContent() {
-    for (let i = 0; i < contentContainer.children.length; i++) {
-      contentContainer.children[i].style.display = "none";
-    }
-  }
-  function displayHomeScreen() {
-    topHeader.style.display = "block";
-    pvpButton.style.display = "block";
-    pvcButton.style.display = "block";
-  }
-
-  function displayGameScreen() {
-    upperBoardArea.style.display = "grid";
-    lowerBoardArea.style.display = "grid";
-    upperPlayerScore.style.display = "grid";
-    lowerPlayerScore.style.display = "grid";
-    createBoards();
-  }
-
-  function changeShipColor(ship) {
-    ship.classList.add("destroyed-ship");
-  }
-
-  function handleShipHit(ship) {
-    ship.hit();
-    if (ship.destroyed) {
-      changeShipColor(ship);
-    }
-  }
-
-  function shipArrangement() {
-    playerTurnMessage.style.display = "flex";
-    shipArrangementPlayer1();
-  }
-
-  function shipArrangementPlayer1() {
-    playerTurnMessage.textContent = "PLAYER 1 - ARRANGE SHIPS";
-    upperBoardArea.style.opacity = "50%";
-    shipInputBox.style.display = "flex";
-  }
-
-  function placeShip(ship) {
-    ship.boardPlacement = calculatePlacement(ship);
-    // checkIfPositionIsTaken(ship);
-    setShipPlacementColors(ship.boardPlacement, ship.color);
-    console.log(ship.color);
-  }
-
-  function setShipPlacementColors(coordinates, color) {
-    coordinates.forEach((coordinate) => {
-      for (let i = 0; i < lowerPlayerSquares.length; i++) {
-        if (lowerPlayerSquares[i].getAttribute("id") == coordinate.toString()) {
-          lowerPlayerSquares[i].style.background = color; // Color the square
-        }
-      }
-    });
-  }
-
-  function calculatePlacement(ship) {
-    //Choosing a random coordinate to begin the placement from
-    const coordinate = Math.floor(Math.random() * 100);
-    //Choosing vertical or horizontal placement randomly
-    const directionOfPlacement = Math.floor(Math.random() * 2);
-    const placement = [];
-
-    for (let i = 0; i < ship.life; i++) {
-      //Vertical placement
-      if (directionOfPlacement == 0) {
-        if (coordinate <= 59) placement.push(coordinate + i * 10);
-        else placement.push(coordinate - i * 10);
-        //Horizontal placement.
-      } else {
-        // If coordinate ends with 5 or less:
-        if (coordinate % 10 <= 5) placement.push(coordinate + i);
-        else placement.push(coordinate - i);
-      }
-    }
-    console.log(placement);
-    return placement;
-  }
-
-  // function checkIfPositionIsTaken(ship){
-  //   const allPlacements = []
-  // }
-
   function bindEvents() {
     pvpButton.addEventListener("click", () => {
       gameModeText.textContent = "Mode: PvP";
@@ -163,6 +77,10 @@ export function ViewModel() {
     });
     lowerShipInputButton1.addEventListener("click", () => {
       placeShip(player1Ship1);
+      placeShip(player1Ship2);
+      placeShip(player1Ship3);
+      placeShip(player1Ship4);
+      placeShip(player1Ship5);
     });
   }
 
@@ -214,6 +132,107 @@ export function ViewModel() {
         lowerPlayerBoard.appendChild(matrixItem2);
       }
     }
+  }
+
+  function clearContent() {
+    for (let i = 0; i < contentContainer.children.length; i++) {
+      contentContainer.children[i].style.display = "none";
+    }
+  }
+
+  function displayHomeScreen() {
+    topHeader.style.display = "block";
+    pvpButton.style.display = "block";
+    pvcButton.style.display = "block";
+  }
+
+  function displayGameScreen() {
+    upperBoardArea.style.display = "grid";
+    lowerBoardArea.style.display = "grid";
+    upperPlayerScore.style.display = "grid";
+    lowerPlayerScore.style.display = "grid";
+    createBoards();
+  }
+
+  function changeShipColor(ship) {
+    ship.classList.add("destroyed-ship");
+  }
+
+  function handleShipHit(ship) {
+    ship.hit();
+    if (ship.destroyed) {
+      changeShipColor(ship);
+    }
+  }
+
+  function shipArrangement() {
+    playerTurnMessage.style.display = "flex";
+    shipArrangementPlayer1();
+  }
+
+  function shipArrangementPlayer1() {
+    playerTurnMessage.textContent = "PLAYER 1 - ARRANGE SHIPS";
+    upperBoardArea.style.opacity = "50%";
+    shipInputBox.style.display = "flex";
+  }
+
+  function placeShip(ship) {
+    ship.boardPlacement = calculatePlacement(ship);
+    // checkIfPositionIsTaken(ship);
+    setShipPlacementColors(ship.boardPlacement, ship.color);
+    console.log(ship.color);
+  }
+
+  function calculatePlacement(ship) {
+    //Choosing a random coordinate to begin the placement from
+    const coordinate = Math.floor(Math.random() * 100);
+    //Choosing vertical or horizontal placement randomly
+    const directionOfPlacement = Math.floor(Math.random() * 2);
+    const placement = [];
+
+    for (let i = 0; i < ship.life; i++) {
+      //Vertical placement
+      if (directionOfPlacement == 0) {
+        if (coordinate <= 59) placement.push(coordinate + i * 10);
+        else placement.push(coordinate - i * 10);
+        //Horizontal placement.
+      } else {
+        // If coordinate ends with 5 or less:
+        if (coordinate % 10 <= 5) placement.push(coordinate + i);
+        else placement.push(coordinate - i);
+      }
+    }
+    return formatCoordinatesToMatchID(placement);
+  }
+
+  function formatCoordinatesToMatchID(placement) {
+    const formattedPlacement = placement.map((coordinate) => {
+      if (coordinate < 10) {
+        return "0" + coordinate;
+      }
+      return coordinate.toString();
+    });
+    return formattedPlacement;
+  }
+
+  function setShipPlacementColors(coordinates, color) {
+    coordinates.forEach((coordinate) => {
+      for (let i = 0; i < lowerPlayerSquares.length; i++) {
+        if (lowerPlayerSquares[i].getAttribute("id") == coordinate.toString()) {
+          lowerPlayerSquares[i].style.background = color; // Color the square
+        }
+      }
+    });
+  }
+
+  function checkIfPositionIsTaken(ship) {
+    const allPlacements = [
+      [player1Ship1.boardPlacement],
+      [player1Ship2.boardPlacement],
+      [player1Ship3.boardPlacement],
+      [player1Ship4.boardPlacement],
+      [player1Ship5.boardPlacement],
+    ];
   }
 
   return {
