@@ -47,6 +47,7 @@ export function ViewModel() {
 
   const upperPlayerSquares = [];
   const lowerPlayerSquares = [];
+  const occupiedSquares = [];
 
   const shipInputBox = document.querySelector(".ship-input-box");
   const lowerShipInputButton1 = document.querySelector(
@@ -76,6 +77,7 @@ export function ViewModel() {
       shipArrangement();
     });
     lowerShipInputButton1.addEventListener("click", () => {
+      // clearArrangement();
       placeShip(player1Ship1);
       placeShip(player1Ship2);
       placeShip(player1Ship3);
@@ -178,9 +180,19 @@ export function ViewModel() {
 
   function placeShip(ship) {
     ship.boardPlacement = calculatePlacement(ship);
-    // checkIfPositionIsTaken(ship);
+    while (positionIsTaken(ship)) {
+      ship.boardPlacement = calculatePlacement(ship);
+      console.log("!!POSITION TAKEN!!");
+    }
+    occupiedSquares.push(ship.boardPlacement);
     setShipPlacementColors(ship.boardPlacement, ship.color);
-    console.log(ship.color);
+  }
+
+  function positionIsTaken(ship) {
+    const flattenArray = occupiedSquares.flat();
+    return ship.boardPlacement.some((coordinate) =>
+      flattenArray.includes(coordinate)
+    );
   }
 
   function calculatePlacement(ship) {
@@ -225,18 +237,9 @@ export function ViewModel() {
     });
   }
 
-  function checkIfPositionIsTaken(ship) {
-    const allPlacements = [
-      [player1Ship1.boardPlacement],
-      [player1Ship2.boardPlacement],
-      [player1Ship3.boardPlacement],
-      [player1Ship4.boardPlacement],
-      [player1Ship5.boardPlacement],
-    ];
-  }
-
   return {
     displayHomeScreen,
     bindEvents,
+    positionIsTaken,
   };
 }
