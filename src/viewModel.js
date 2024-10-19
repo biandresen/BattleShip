@@ -10,9 +10,11 @@ const BATTLESHIP_LIFE = 4;
 const CRUISER_LIFE = 3;
 const SUBMARINE_LIFE = 3;
 const DESTROYER_LIFE = 2;
+const PLAYER1 = 1;
+const PLAYER2 = 2;
 
 export function ViewModel() {
-  //* #region API for Elements
+  // #region API for Elements
   const carrierColor = getComputedStyle(
     document.documentElement
   ).getPropertyValue("--carrier-color");
@@ -36,9 +38,6 @@ export function ViewModel() {
   const playerTurnMessage = document.querySelector(".player-turn-message");
   const topHeader = document.querySelector(".top-header");
   const bottomHeader = document.querySelector(".bottom-header");
-  const pvpButton = document.querySelector(".pvp-button");
-  const pvcButton = document.querySelector(".pvc-button");
-  const replayButton = document.querySelector(".replay-button");
   const upperPlayerName = document.querySelector(".upper-player-name");
   const upperPlayerScore = document.querySelector(".upper-player-score");
   const upperBoardArea = document.querySelector(".upper-board-area");
@@ -72,15 +71,26 @@ export function ViewModel() {
   const lowerPlayerSquares = [];
   const occupiedSquares = [];
 
-  const player1ArrangeDoneButton = document.querySelector(
-    ".player1-arrange-done-button"
-  );
+  const arrangeButtonBox1 = document.querySelector(".arrange-button-box1");
+  const arrangeButtonBox2 = document.querySelector(".arrange-button-box2");
+  const pvpButton = document.querySelector(".pvp-button");
+  const pvcButton = document.querySelector(".pvc-button");
+  const replayButton = document.querySelector(".replay-button");
   const player1ShipArrangeButton = document.querySelector(
     ".player1-ship-arrange-button"
   );
+  const player1ArrangeDoneButton = document.querySelector(
+    ".player1-arrange-done-button"
+  );
+  const player2ArrangeDoneButton = document.querySelector(
+    ".player2-arrange-done-button"
+  );
+  const player2ShipArrangeButton = document.querySelector(
+    ".player2-ship-arrange-button"
+  );
   const contentContainer = document.querySelector(".content");
   // #endregion
-  //* #region API for Ships
+  // #region API for Ships
 
   const player1Ship1 = Model().createShip(CARRIER, CARRIER_LIFE, carrierColor);
   const player1Ship2 = Model().createShip(
@@ -138,19 +148,44 @@ export function ViewModel() {
       upperPlayerName.textContent = "Player 2";
       clearContent();
       displayGameScreen();
-      shipArrangement();
+      shipArrangement(PLAYER1);
     });
     player1ShipArrangeButton.addEventListener("click", () => {
-      clearShipArrangement(1);
-      placeShip(player1Ship1);
-      placeShip(player1Ship2);
-      placeShip(player1Ship3);
-      placeShip(player1Ship4);
-      placeShip(player1Ship5);
+      clearShipArrangement(PLAYER1);
+      placeShip(PLAYER1, player1Ship1);
+      placeShip(PLAYER1, player1Ship2);
+      placeShip(PLAYER1, player1Ship3);
+      placeShip(PLAYER1, player1Ship4);
+      placeShip(PLAYER1, player1Ship5);
       player1ArrangeDoneButton.style.display = "flex";
       // for (let i = 0; i < allPlayer1Ships.length; i++) {
       //   console.log(allPlayer1Ships[i].boardPlacement);
       // }
+    });
+    player2ShipArrangeButton.addEventListener("click", () => {
+      clearShipArrangement(PLAYER2);
+      placeShip(PLAYER2, player2Ship1);
+      placeShip(PLAYER2, player2Ship2);
+      placeShip(PLAYER2, player2Ship3);
+      placeShip(PLAYER2, player2Ship4);
+      placeShip(PLAYER2, player2Ship5);
+      player2ArrangeDoneButton.style.display = "flex";
+      // for (let i = 0; i < allPlayer1Ships.length; i++) {
+      //   console.log(allPlayer2Ships[i].boardPlacement);
+      // }
+    });
+    player1ArrangeDoneButton.addEventListener("click", () => {
+      upperBoardArea.style.opacity = "100%";
+      upperPlayerScore.style.opacity = "100%";
+      arrangeButtonBox1.style.display = "none";
+      resetBoardColors(PLAYER1);
+      shipArrangement(PLAYER2);
+    });
+    player2ArrangeDoneButton.addEventListener("click", () => {
+      lowerBoardArea.style.opacity = "100%";
+      lowerPlayerScore.style.opacity = "100%";
+      arrangeButtonBox2.style.display = "none";
+      resetBoardColors(PLAYER2);
     });
   }
 
@@ -235,37 +270,57 @@ export function ViewModel() {
     }
   }
 
-  function shipArrangement() {
+  function shipArrangement(player) {
     playerTurnMessage.style.display = "flex";
-    shipArrangementPlayer1();
-  }
-
-  function shipArrangementPlayer1() {
-    playerTurnMessage.textContent = "PLAYER 1 - ARRANGE SHIPS";
-    upperBoardArea.style.opacity = "50%";
-    player1ShipArrangeButton.style.display = "flex";
+    if (player == PLAYER1) {
+      playerTurnMessage.textContent = "PLAYER 1 - ARRANGE SHIPS";
+      upperBoardArea.style.opacity = "50%";
+      upperPlayerScore.style.opacity = "50%";
+      player1ShipArrangeButton.style.display = "flex";
+    } else if (player == PLAYER2) {
+      playerTurnMessage.textContent = "PLAYER 2 - ARRANGE SHIPS";
+      lowerBoardArea.style.opacity = "50%";
+      lowerPlayerScore.style.opacity = "50%";
+      player2ShipArrangeButton.style.display = "flex";
+    } else {
+    }
   }
 
   function clearShipArrangement(player) {
-    if (player == 1) {
+    if (player == PLAYER1) {
       allPlayer1Ships.forEach((ship) => {
         ship.boardPlacement = [];
       });
-      lowerPlayerSquares.forEach((square) => {
-        square.style.background = mainColor;
+      resetBoardColors(PLAYER1);
+    } else {
+      allPlayer2Ships.forEach((ship) => {
+        ship.boardPlacement = [];
       });
+      resetBoardColors(PLAYER2);
     }
     //Reset the occupied square list each clear
     occupiedSquares.length = 0;
   }
 
-  function placeShip(ship) {
+  function resetBoardColors(player) {
+    if (player == PLAYER1) {
+      lowerPlayerSquares.forEach((square) => {
+        square.style.background = mainColor;
+      });
+    } else {
+      upperPlayerSquares.forEach((square) => {
+        square.style.background = mainColor;
+      });
+    }
+  }
+
+  function placeShip(player, ship) {
     ship.boardPlacement = calculatePlacement(ship);
     while (positionIsTaken(ship)) {
       ship.boardPlacement = calculatePlacement(ship);
     }
     occupiedSquares.push(ship.boardPlacement);
-    setShipPlacementColors(ship.boardPlacement, ship.color);
+    setShipPlacementColors(player, ship.boardPlacement, ship.color);
   }
 
   function positionIsTaken(ship) {
@@ -307,14 +362,28 @@ export function ViewModel() {
     return formattedPlacement;
   }
 
-  function setShipPlacementColors(coordinates, color) {
-    coordinates.forEach((coordinate) => {
-      for (let i = 0; i < lowerPlayerSquares.length; i++) {
-        if (lowerPlayerSquares[i].getAttribute("id") == coordinate.toString()) {
-          lowerPlayerSquares[i].style.background = color; // Color the square
+  function setShipPlacementColors(player, coordinates, color) {
+    if (player == PLAYER1) {
+      coordinates.forEach((coordinate) => {
+        for (let i = 0; i < lowerPlayerSquares.length; i++) {
+          if (
+            lowerPlayerSquares[i].getAttribute("id") == coordinate.toString()
+          ) {
+            lowerPlayerSquares[i].style.background = color; // Color the square
+          }
         }
-      }
-    });
+      });
+    } else {
+      coordinates.forEach((coordinate) => {
+        for (let i = 0; i < upperPlayerSquares.length; i++) {
+          if (
+            upperPlayerSquares[i].getAttribute("id") == coordinate.toString()
+          ) {
+            upperPlayerSquares[i].style.background = color; // Color the square
+          }
+        }
+      });
+    }
   }
 
   return {
