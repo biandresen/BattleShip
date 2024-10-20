@@ -1,5 +1,6 @@
 //* VIEW MODEL - INTERFACE (UI)
 import { Model } from "./model";
+// #region constants
 const CARRIER = "Carrier";
 const BATTLESHIP = "Battleship";
 const CRUISER = "Cruiser";
@@ -12,6 +13,7 @@ const SUBMARINE_LIFE = 3;
 const DESTROYER_LIFE = 2;
 const PLAYER1 = 1;
 const PLAYER2 = 2;
+// #endregion
 
 export function ViewModel() {
   // #region API for Elements
@@ -186,6 +188,7 @@ export function ViewModel() {
       lowerPlayerScore.style.opacity = "100%";
       arrangeButtonBox2.style.display = "none";
       resetBoardColors(PLAYER2);
+      setGameInProgress();
     });
   }
 
@@ -257,17 +260,6 @@ export function ViewModel() {
     upperPlayerScore.style.display = "grid";
     lowerPlayerScore.style.display = "grid";
     createBoards();
-  }
-
-  function changeShipColor(ship) {
-    ship.classList.add("destroyed-ship");
-  }
-
-  function handleShipHit(ship) {
-    ship.hit();
-    if (ship.destroyed) {
-      changeShipColor(ship);
-    }
   }
 
   function shipArrangement(player) {
@@ -383,6 +375,57 @@ export function ViewModel() {
           }
         }
       });
+    }
+  }
+
+  function setGameInProgress() {
+    chooseWhoStarts();
+  }
+
+  function chooseWhoStarts() {
+    const playerStarts = Math.floor(Math.random() * 2 + 1);
+    console.log(playerStarts);
+    if (playerStarts == 1) player1Turn();
+    else player2Turn();
+  }
+
+  function player1Turn() {
+    playerTurnMessage.textContent = "PLAYER 1 - LAUNCH MISSILE!";
+    lightUpOpponentsBoard(PLAYER1);
+    setUpLaunchSelection(PLAYER1)
+  }
+
+  function player2Turn() {
+    playerTurnMessage.textContent = "PLAYER 2 - LAUNCH MISSILE!";
+    lightUpOpponentsBoard(PLAYER2);
+  }
+
+  function setUpLaunchSelection(player){
+    if (player = PLAYER1){
+     upperPlayerSquares.forEach(square => {
+       square.addEventListener("click", (event) => {
+        checkForShipHit(event);
+       })
+     });
+    }
+  }
+
+  function lightUpOpponentsBoard(player) {
+    if (player == PLAYER1) {
+      upperBoardArea.classList.add("board-glow");
+    } else {
+      lowerBoardArea.classList.add("board-glow");
+    }
+  }
+
+  function changeShipColor(ship) {
+    ship.classList.add("destroyed-ship");
+  }
+
+  function handleShipHit(ship) {
+    ship.hit();
+    if (ship.destroyed) {
+      changeShipColor(ship);
     }
   }
 

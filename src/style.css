@@ -391,3 +391,12 @@ height: 100vh; */
 .position-selected {
   background: var(--accept-color);
 }
+
+.board-glow {
+  border: 5px solid rgba(255, 0, 0, 0.5);
+  background: rgba(255, 0, 0, 0.5);
+  box-shadow:
+    0 0 10px rgba(255, 0, 0, 0.6),
+    0 0 20px rgba(255, 0, 0, 0.4),
+    0 0 30px rgba(255, 0, 0, 0.2);
+}
