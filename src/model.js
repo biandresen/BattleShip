@@ -20,9 +20,9 @@ export function Model() {
         this.destroyed = true;
       }
     }
-    isHitAtPosition(x, y) {
+    isHitAtPosition(squareID) {
       return this.boardPlacement.some(
-        (position) => position.x === x && position.y === y
+        (position) => position == squareID
       );
     }
   }

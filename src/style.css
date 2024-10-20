@@ -30,11 +30,11 @@ footer {
   --big-font-size: 1.8rem;
   --gigantic-font-size: 3.6rem;
 
-  --carrier-color: blue;
-  --battleship-color: purple;
-  --cruiser-color: green;
-  --submarine-color: magenta;
-  --destroyer-color: #ff6500;
+  --carrier-color: rgb(255, 168, 6);
+  --battleship-color: rgb(136, 255, 63);
+  --cruiser-color: rgb(0, 255, 217);
+  --submarine-color: rgb(167, 167, 168);
+  --destroyer-color: #ff4df9;
   --text-outline: -2px -2px 0px black, /* Top-left shadow */ 1px -1px 0px black,
     /* Top-right shadow */ -2px 2px 0px black,
     /* Bottom-left shadow */ 2px 2px 0px black; /* Bottom-right shadow */
@@ -198,6 +198,7 @@ height: 100vh; */
 }
 .destroyed-ship {
   background: var(--error-color);
+  border: red;
 }
 .destroyed-ship {
   background: var(--error-color);
@@ -342,13 +343,18 @@ height: 100vh; */
   flex: 1 1 1;
   justify-content: center;
   align-items: center;
-  background-color: var(--primary-color-highlight);
-  border: 1px solid var(--primary-color);
+  background-color: var(--primary-color);
+  border-top: 1px solid var(--primary-color-highlight);
+  border-right: 1px solid var(--primary-color-highlight);
+}
+.matrix-item:hover {
+  transform: scale(1.3);
+  border: 3px solid red;
 }
 .dot {
-  width: 7px;
-  height: 7px;
-  background-color: black;
+  width: 9px;
+  height: 9px;
+  background-color: var(--primary-color);
   border-radius: 50%; /* Makes the dot circular */
 }
 
@@ -399,4 +405,25 @@ height: 100vh; */
     0 0 10px rgba(255, 0, 0, 0.6),
     0 0 20px rgba(255, 0, 0, 0.4),
     0 0 30px rgba(255, 0, 0, 0.2);
+}
+
+.ship-destroyed-modal {
+  width: 300px;
+  padding: 20px;
+  background: var(--error-color);
+  color: var(--text-color);
+  font-size: var(--big-font-size);
+  font-weight: 800;
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5); /* Optional dark overlay */
 }

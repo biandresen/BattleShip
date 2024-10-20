@@ -13,6 +13,7 @@ const SUBMARINE_LIFE = 3;
 const DESTROYER_LIFE = 2;
 const PLAYER1 = 1;
 const PLAYER2 = 2;
+let currentPlayer;
 // #endregion
 
 export function ViewModel() {
@@ -33,9 +34,11 @@ export function ViewModel() {
     document.documentElement
   ).getPropertyValue("--destroyer-color");
   const mainColor = getComputedStyle(document.documentElement).getPropertyValue(
-    "--primary-color-highlight"
+    "--primary-color"
   );
 
+  const modal = document.querySelector(".ship-destroyed-modal");
+  const modalMessage = document.querySelector(".modal-message");
   const gameModeText = document.querySelector(".game-mode-text");
   const playerTurnMessage = document.querySelector(".player-turn-message");
   const topHeader = document.querySelector(".top-header");
@@ -68,6 +71,32 @@ export function ViewModel() {
   const lowerPlayerShip3 = document.querySelector(".lower-player-ship3");
   const lowerPlayerShip4 = document.querySelector(".lower-player-ship4");
   const lowerPlayerShip5 = document.querySelector(".lower-player-ship5");
+  const player2UIShips = [
+    upperPlayerShip1,
+    upperPlayerShip2,
+    upperPlayerShip3,
+    upperPlayerShip4,
+    upperPlayerShip5,
+  ];
+  const player1UIShips = [
+    lowerPlayerShip1,
+    lowerPlayerShip2,
+    lowerPlayerShip3,
+    lowerPlayerShip4,
+    lowerPlayerShip5,
+  ];
+  const allUIShips = [
+    upperPlayerShip1,
+    upperPlayerShip2,
+    upperPlayerShip3,
+    upperPlayerShip4,
+    upperPlayerShip5,
+    lowerPlayerShip1,
+    lowerPlayerShip2,
+    lowerPlayerShip3,
+    lowerPlayerShip4,
+    lowerPlayerShip5,
+  ];
 
   const upperPlayerSquares = [];
   const lowerPlayerSquares = [];
@@ -142,6 +171,18 @@ export function ViewModel() {
     player2Ship4,
     player2Ship5,
   ];
+  const allShips = [
+    player1Ship1,
+    player1Ship2,
+    player1Ship3,
+    player1Ship4,
+    player1Ship5,
+    player2Ship1,
+    player2Ship2,
+    player2Ship3,
+    player2Ship4,
+    player2Ship5,
+  ];
   // #endregion
 
   function bindEvents() {
@@ -160,9 +201,6 @@ export function ViewModel() {
       placeShip(PLAYER1, player1Ship4);
       placeShip(PLAYER1, player1Ship5);
       player1ArrangeDoneButton.style.display = "flex";
-      // for (let i = 0; i < allPlayer1Ships.length; i++) {
-      //   console.log(allPlayer1Ships[i].boardPlacement);
-      // }
     });
     player2ShipArrangeButton.addEventListener("click", () => {
       clearShipArrangement(PLAYER2);
@@ -172,9 +210,6 @@ export function ViewModel() {
       placeShip(PLAYER2, player2Ship4);
       placeShip(PLAYER2, player2Ship5);
       player2ArrangeDoneButton.style.display = "flex";
-      // for (let i = 0; i < allPlayer1Ships.length; i++) {
-      //   console.log(allPlayer2Ships[i].boardPlacement);
-      // }
     });
     player1ArrangeDoneButton.addEventListener("click", () => {
       upperBoardArea.style.opacity = "100%";
@@ -188,7 +223,7 @@ export function ViewModel() {
       lowerPlayerScore.style.opacity = "100%";
       arrangeButtonBox2.style.display = "none";
       resetBoardColors(PLAYER2);
-      setGameInProgress();
+      chooseTurn();
     });
   }
 
@@ -197,15 +232,16 @@ export function ViewModel() {
     // the square and on click change color of dot (white if miss, red if hit)
 
     // Create a 10x10 matrix (100 divs in total)
-    //   UPPER PLAYER BOARD:
     for (let row = 0; row < 10; row++) {
       for (let col = 0; col < 10; col++) {
+        //   UPPER PLAYER BOARD:
         // Create a matrix item (div)
         const matrixItem = document.createElement("div");
         matrixItem.classList.add("matrix-item");
 
         //Set up ID
         matrixItem.setAttribute("id", row.toString() + col.toString());
+        matrixItem.setAttribute("data-player", "2");
 
         upperPlayerSquares.push(matrixItem);
 
@@ -226,6 +262,7 @@ export function ViewModel() {
 
         //Set up ID
         matrixItem2.setAttribute("id", row.toString() + col.toString());
+        matrixItem2.setAttribute("data-player", "1");
 
         lowerPlayerSquares.push(matrixItem2);
 
@@ -378,55 +415,154 @@ export function ViewModel() {
     }
   }
 
-  function setGameInProgress() {
-    chooseWhoStarts();
-  }
+  function chooseTurn() {
+    //First turn is random, rest is turn based.
+    if (typeof currentPlayer === "undefined") {
+      currentPlayer = Math.floor(Math.random() * 2) + 1;
+    } else currentPlayer = currentPlayer === 1 ? 2 : 1;
 
-  function chooseWhoStarts() {
-    const playerStarts = Math.floor(Math.random() * 2 + 1);
-    console.log(playerStarts);
-    if (playerStarts == 1) player1Turn();
+    if (currentPlayer === 1) player1Turn();
     else player2Turn();
   }
 
   function player1Turn() {
     playerTurnMessage.textContent = "PLAYER 1 - LAUNCH MISSILE!";
+    dimOwnBoard(PLAYER1);
     lightUpOpponentsBoard(PLAYER1);
-    setUpLaunchSelection(PLAYER1)
+    disableBoard(lowerPlayerSquares);
+    enableBoard(upperPlayerSquares);
   }
 
   function player2Turn() {
     playerTurnMessage.textContent = "PLAYER 2 - LAUNCH MISSILE!";
+    dimOwnBoard(PLAYER2);
     lightUpOpponentsBoard(PLAYER2);
+    disableBoard(upperPlayerSquares);
+    enableBoard(lowerPlayerSquares);
   }
 
-  function setUpLaunchSelection(player){
-    if (player = PLAYER1){
-     upperPlayerSquares.forEach(square => {
-       square.addEventListener("click", (event) => {
-        checkForShipHit(event);
-       })
-     });
+  function disableBoard(boardSquares) {
+    boardSquares.forEach((square) => {
+      square.removeEventListener("click", handleSquareClick);
+    });
+  }
+
+  function enableBoard(boardSquares) {
+    boardSquares.forEach((square) => {
+      square.addEventListener("click", handleSquareClick);
+    });
+  }
+
+  function handleSquareClick(event) {
+    const square = event.target;
+    const player = currentPlayer;
+    checkForShipHit(player, square);
+  }
+
+  function checkForShipHit(player, square) {
+    const squareID = square.id;
+    let hitDetected = false;
+
+    if (player == PLAYER1) {
+      allPlayer2Ships.forEach((ship) => {
+        if (ship.isHitAtPosition(squareID)) {
+          handleShipHit(player, ship, square);
+          hitDetected = true;
+        }
+      });
+      if (!hitDetected) handleShipMiss(PLAYER1, square);
+    } else if (player == PLAYER2) {
+      allPlayer1Ships.forEach((ship) => {
+        if (ship.isHitAtPosition(squareID)) {
+          handleShipHit(player, ship, square);
+          hitDetected = true;
+        }
+      });
+      if (!hitDetected) handleShipMiss(PLAYER2, square);
     }
+  }
+
+  function handleShipHit(player, ship, square) {
+    ship.hit();
+    handleSquare(true, square);
+    showHitMessage(player, square);
+    if (ship.destroyed) {
+      changeDestroyedShipColor(player, ship);
+    }
+    chooseTurn();
+  }
+
+  function handleShipMiss(player, square) {
+    handleSquare(false, square);
+    showMissMessage(player);
+    chooseTurn();
+  }
+
+  function handleSquare(status, square) {
+    if (!status) {
+      if (square.firstChild) {
+        square.firstChild.style.background = "white";
+      }
+    } else if (status) {
+      if (square.firstChild) {
+        square.firstChild.style.background = "red";
+      }
+    }
+  }
+
+  function changeDestroyedShipColor(player, actualShip) {
+    if (player == PLAYER1) {
+      player2UIShips.forEach((ship) => {
+        if (ship.getAttribute("name") == actualShip.shipType) {
+          ship.classList.add("destroyed-ship");
+        }
+      });
+    } else if (player == PLAYER2) {
+      player1UIShips.forEach((ship) => {
+        if (ship.getAttribute("name") == actualShip.shipType) {
+          ship.classList.add("destroyed-ship");
+        }
+      });
+    }
+    showDestroyedMessage(actualShip);
   }
 
   function lightUpOpponentsBoard(player) {
     if (player == PLAYER1) {
       upperBoardArea.classList.add("board-glow");
-    } else {
+    } else if (player == PLAYER2) {
       lowerBoardArea.classList.add("board-glow");
     }
   }
 
-  function changeShipColor(ship) {
-    ship.classList.add("destroyed-ship");
+  function dimOwnBoard(player) {
+    if (player == PLAYER1) {
+      lowerBoardArea.classList.remove("board-glow");
+    } else if (player == PLAYER2) {
+      upperBoardArea.classList.remove("board-glow");
+    }
   }
 
-  function handleShipHit(ship) {
-    ship.hit();
-    if (ship.destroyed) {
-      changeShipColor(ship);
-    }
+  function showHitMessage(player) {
+    modalMessage.textContent = `PLAYER ${player} HIT!`;
+    showModal();
+  }
+
+  function showMissMessage(player) {
+    modalMessage.textContent = `PLAYER ${player} MISS!`;
+    showModal();
+  }
+
+  function showDestroyedMessage(ship) {
+    modalMessage.textContent = `${ship.shipType} has been destroyed`;
+    showModal();
+  }
+
+  function showModal() {
+    modal.style.display = "block";
+    setTimeout(() => {
+      modal.style.display = "none";
+    }, 2000);
   }
 
   return {
