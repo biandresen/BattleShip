@@ -1,5 +1,5 @@
 //* VIEW MODEL - INTERFACE (UI)
-import { Model } from "./model";
+import { Model } from "./Model.js";
 // #region constants
 const CARRIER = "Carrier";
 const BATTLESHIP = "Battleship";
@@ -499,14 +499,16 @@ export function ViewModel() {
   }
 
   function handleSquare(status, square) {
+    //To make sure the child exists. If not. Make it. This was a problem before.
+    if (!square.firstChild) {
+      const dot = document.createElement("div");
+      dot.classList.add("dot");
+      square.appendChild(dot);
+    }
     if (!status) {
-      if (square.firstChild) {
-        square.firstChild.style.background = "white";
-      }
-    } else if (status) {
-      if (square.firstChild) {
-        square.firstChild.style.background = "red";
-      }
+      square.firstChild.style.background = "white";
+    } else {
+      square.firstChild.style.background = "red";
     }
   }
 

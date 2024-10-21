@@ -1,4 +1,4 @@
-import { ViewModel } from "./viewModel";
+import { ViewModel } from "./ViewModel.js";
 
 export function Model() {
   class Ship {
@@ -21,9 +21,7 @@ export function Model() {
       }
     }
     isHitAtPosition(squareID) {
-      return this.boardPlacement.some(
-        (position) => position == squareID
-      );
+      return this.boardPlacement.some((position) => position == squareID);
     }
   }
 
