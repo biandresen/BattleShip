@@ -222,14 +222,14 @@ export function ViewModel() {
       upperBoardArea.style.opacity = "100%";
       upperPlayerScore.style.opacity = "100%";
       arrangeButtonBox1.style.display = "none";
-      // resetBoardColors(PLAYER1);
+      resetBoardColors(PLAYER1);
       shipArrangement(PLAYER2);
     });
     player2ArrangeDoneButton.addEventListener("click", () => {
       lowerBoardArea.style.opacity = "100%";
       lowerPlayerScore.style.opacity = "100%";
       arrangeButtonBox2.style.display = "none";
-      // resetBoardColors(PLAYER2);
+      resetBoardColors(PLAYER2);
       chooseTurn();
     });
   }
@@ -348,7 +348,15 @@ export function ViewModel() {
       });
     }
   }
+  function displayShip(player, ship) {
+    const board = player === PLAYER1 ? upperPlayerBoard : lowerPlayerBoard;
 
+    Array.from(board.children).forEach((square) => {
+      if (ship.boardPlacement.includes(square.id)) {
+        square.style.background = ship.color;
+      }
+    });
+  }
   function placeShip(player, ship) {
     ship.boardPlacement = calculatePlacement(ship);
     while (positionIsTaken(ship)) {
@@ -508,6 +516,7 @@ export function ViewModel() {
     showHitMessage(player, square);
     if (ship.destroyed) {
       changeDestroyedShipColor(player, ship);
+      displayShip(player, ship);
       if (player === PLAYER1) player1ShipDestroyedCounter--;
       else player2ShipDestroyedCounter--;
     }
