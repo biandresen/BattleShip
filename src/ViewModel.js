@@ -13,8 +13,11 @@ const SUBMARINE_LIFE = 3;
 const DESTROYER_LIFE = 2;
 const PLAYER1 = 1;
 const PLAYER2 = 2;
+const SHIP_AMOUNT = 5;
 let currentPlayer;
 let hitDetected;
+let player1ShipDestroyedCounter;
+let player2ShipDestroyedCounter;
 // #endregion
 
 export function ViewModel() {
@@ -194,6 +197,9 @@ export function ViewModel() {
       displayGameScreen();
       shipArrangement(PLAYER1);
     });
+    replayButton.addEventListener("click", () => {
+      location.reload();
+    });
     player1ShipArrangeButton.addEventListener("click", () => {
       clearShipArrangement(PLAYER1);
       placeShip(PLAYER1, player1Ship1);
@@ -229,9 +235,6 @@ export function ViewModel() {
   }
 
   function createBoards() {
-    // Add event listener to the square -> on hover highlight
-    // the square and on click change color of dot (white if miss, red if hit)
-
     // Create a 10x10 matrix (100 divs in total)
     for (let row = 0; row < 10; row++) {
       for (let col = 0; col < 10; col++) {
@@ -297,6 +300,8 @@ export function ViewModel() {
     lowerBoardArea.style.display = "grid";
     upperPlayerScore.style.display = "grid";
     lowerPlayerScore.style.display = "grid";
+    player1ShipDestroyedCounter = SHIP_AMOUNT;
+    player2ShipDestroyedCounter = SHIP_AMOUNT;
     createBoards();
   }
 
@@ -503,8 +508,38 @@ export function ViewModel() {
     showHitMessage(player, square);
     if (ship.destroyed) {
       changeDestroyedShipColor(player, ship);
+      if (player === PLAYER1) player1ShipDestroyedCounter--;
+      else player2ShipDestroyedCounter--;
     }
-    setTimeout(chooseTurn, 200); // Delay to ensure turn switch stability
+
+    console.log(player1ShipDestroyedCounter);
+    console.log(player2ShipDestroyedCounter);
+    //Check for winner/loser
+    if (
+      player1ShipDestroyedCounter === 0 ||
+      player2ShipDestroyedCounter === 0
+    ) {
+      gameOver(player);
+    } else {
+      setTimeout(chooseTurn, 200); // Delay to ensure turn switch stability
+    }
+  }
+
+  function gameOver(player) {
+    showGameOverMessage(player);
+    setTimeout(() => {
+      displayGameOverScreen(player);
+    }, 3000);
+  }
+
+  function displayGameOverScreen(player) {
+    clearContent();
+    topHeader.textContent = "GAME OVER";
+    bottomHeader.textContent = `PLAYER ${player} WON!`;
+    topHeader.style.display = "block";
+    bottomHeader.style.display = "block";
+    replayButton.style.display = "block";
+    gameModeText.style.display = "none";
   }
 
   function handleShipMiss(player, square) {
@@ -569,18 +604,23 @@ export function ViewModel() {
     showModal();
   }
 
-  function showHitMessage(player) {
-    modalMessage.textContent = `PLAYER ${player} HIT!`;
+  function showHitMessage() {
+    modalMessage.textContent = `HIT!`;
     showModal();
   }
 
-  function showMissMessage(player) {
-    modalMessage.textContent = `PLAYER ${player} MISS!`;
+  function showMissMessage() {
+    modalMessage.textContent = `MISS!`;
     showModal();
   }
 
   function showDestroyedMessage(ship) {
-    modalMessage.textContent = `${ship.shipType} has been destroyed`;
+    modalMessage.textContent = `${ship.shipType} destroyed`;
+    showModal();
+  }
+
+  function showGameOverMessage(player) {
+    modalMessage.textContent = `PLAYER ${player} SUNK ALL YOUR SHIPS!`;
     showModal();
   }
 
@@ -588,7 +628,7 @@ export function ViewModel() {
     modal.style.display = "block";
     setTimeout(() => {
       modal.style.display = "none";
-    }, 2000);
+    }, 2500);
   }
 
   return {
