@@ -14,6 +14,7 @@ const DESTROYER_LIFE = 2;
 const PLAYER1 = 1;
 const PLAYER2 = 2;
 let currentPlayer;
+let hitDetected;
 // #endregion
 
 export function ViewModel() {
@@ -146,7 +147,7 @@ export function ViewModel() {
     BATTLESHIP_LIFE,
     battleshipColor
   );
-  const player2Ship3 = Model().createShip(CARRIER, CARRIER_LIFE, cruiserColor);
+  const player2Ship3 = Model().createShip(CRUISER, CRUISER_LIFE, cruiserColor);
   const player2Ship4 = Model().createShip(
     SUBMARINE,
     SUBMARINE_LIFE,
@@ -215,14 +216,14 @@ export function ViewModel() {
       upperBoardArea.style.opacity = "100%";
       upperPlayerScore.style.opacity = "100%";
       arrangeButtonBox1.style.display = "none";
-      resetBoardColors(PLAYER1);
+      // resetBoardColors(PLAYER1);
       shipArrangement(PLAYER2);
     });
     player2ArrangeDoneButton.addEventListener("click", () => {
       lowerBoardArea.style.opacity = "100%";
       lowerPlayerScore.style.opacity = "100%";
       arrangeButtonBox2.style.display = "none";
-      resetBoardColors(PLAYER2);
+      // resetBoardColors(PLAYER2);
       chooseTurn();
     });
   }
@@ -454,14 +455,21 @@ export function ViewModel() {
   }
 
   function handleSquareClick(event) {
-    const square = event.target;
+    let square = event.target;
+
+    // Ensure the target is the square, not the dot inside
+    if (!square.id) {
+      square = square.parentElement; // Go up to the square div if the target is the dot
+    }
+
     const player = currentPlayer;
+    hitDetected = false;
     checkForShipHit(player, square);
   }
 
   function checkForShipHit(player, square) {
     const squareID = square.id;
-    let hitDetected = false;
+    console.log("Square ID: " + squareID);
 
     if (player == PLAYER1) {
       allPlayer2Ships.forEach((ship) => {
@@ -484,31 +492,35 @@ export function ViewModel() {
 
   function handleShipHit(player, ship, square) {
     ship.hit();
-    handleSquare(true, square);
+    colorSquareHit(square);
     showHitMessage(player, square);
     if (ship.destroyed) {
       changeDestroyedShipColor(player, ship);
     }
-    chooseTurn();
+    setTimeout(chooseTurn, 200); // Delay to ensure turn switch stability
   }
 
   function handleShipMiss(player, square) {
-    handleSquare(false, square);
+    colorSquareMiss(square);
     showMissMessage(player);
-    chooseTurn();
+    setTimeout(chooseTurn, 200); // Delay to ensure turn switch stability
   }
 
-  function handleSquare(status, square) {
-    //To make sure the child exists. If not. Make it. This was a problem before.
+  function colorSquareHit(square) {
+    ensureDotExists(square);
+    square.firstChild.style.background = "red"; // Hit color
+  }
+
+  function colorSquareMiss(square) {
+    ensureDotExists(square);
+    square.firstChild.style.background = "white"; // Miss color
+  }
+
+  function ensureDotExists(square) {
     if (!square.firstChild) {
       const dot = document.createElement("div");
       dot.classList.add("dot");
       square.appendChild(dot);
-    }
-    if (!status) {
-      square.firstChild.style.background = "white";
-    } else {
-      square.firstChild.style.background = "red";
     }
   }
 

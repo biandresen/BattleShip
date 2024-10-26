@@ -21,6 +21,9 @@ export function Model() {
       }
     }
     isHitAtPosition(squareID) {
+      console.log(
+        "Checking hit at: " + squareID + " Positions: " + this.boardPlacement
+      );
       return this.boardPlacement.some((position) => position == squareID);
     }
   }
