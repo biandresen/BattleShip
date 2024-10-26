@@ -50,26 +50,15 @@ export function ViewModel() {
   const upperPlayerName = document.querySelector(".upper-player-name");
   const upperPlayerScore = document.querySelector(".upper-player-score");
   const upperBoardArea = document.querySelector(".upper-board-area");
-  const lowerPlayerName = document.querySelector(".lower-player-name");
   const lowerPlayerScore = document.querySelector(".lower-player-score");
   const upperPlayerBoard = document.querySelector(".upper-player-board");
   const lowerBoardArea = document.querySelector(".lower-board-area");
-  const upperBoardNumberColumn = document.querySelector(
-    ".upper-board-number-column"
-  );
-  const lowerBoardLetterRow = document.querySelector(".lower-board-letter-row");
   const lowerPlayerBoard = document.querySelector(".lower-player-board");
-  const lowerBoardNumberColumn = document.querySelector(
-    ".lower-board-number-column"
-  );
-  const upperBoardLetterRow = document.querySelector(".upper-board-letter-row");
-  const upperPlayerShips = document.querySelector(".upper-player-ships");
   const upperPlayerShip1 = document.querySelector(".upper-player-ship1");
   const upperPlayerShip2 = document.querySelector(".upper-player-ship2");
   const upperPlayerShip3 = document.querySelector(".upper-player-ship3");
   const upperPlayerShip4 = document.querySelector(".upper-player-ship4");
   const upperPlayerShip5 = document.querySelector(".upper-player-ship5");
-  const lowerPlayerShips = document.querySelector(".lower-player-ships");
   const lowerPlayerShip1 = document.querySelector(".lower-player-ship1");
   const lowerPlayerShip2 = document.querySelector(".lower-player-ship2");
   const lowerPlayerShip3 = document.querySelector(".lower-player-ship3");
@@ -83,18 +72,6 @@ export function ViewModel() {
     upperPlayerShip5,
   ];
   const player1UIShips = [
-    lowerPlayerShip1,
-    lowerPlayerShip2,
-    lowerPlayerShip3,
-    lowerPlayerShip4,
-    lowerPlayerShip5,
-  ];
-  const allUIShips = [
-    upperPlayerShip1,
-    upperPlayerShip2,
-    upperPlayerShip3,
-    upperPlayerShip4,
-    upperPlayerShip5,
     lowerPlayerShip1,
     lowerPlayerShip2,
     lowerPlayerShip3,
@@ -169,18 +146,6 @@ export function ViewModel() {
     player1Ship5,
   ];
   const allPlayer2Ships = [
-    player2Ship1,
-    player2Ship2,
-    player2Ship3,
-    player2Ship4,
-    player2Ship5,
-  ];
-  const allShips = [
-    player1Ship1,
-    player1Ship2,
-    player1Ship3,
-    player1Ship4,
-    player1Ship5,
     player2Ship1,
     player2Ship2,
     player2Ship3,
