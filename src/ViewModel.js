@@ -462,6 +462,14 @@ export function ViewModel() {
       square = square.parentElement; // Go up to the square div if the target is the dot
     }
 
+    // Check if the square was already clicked
+    if (square.hasAttribute("data-click")) {
+      showAlreadyClickedMessage(); // Optional message to inform the player
+      return; // Exit function to allow another try
+    }
+
+    // Mark the square as clicked without setting a value
+    square.setAttribute("data-click", "");
     const player = currentPlayer;
     hitDetected = false;
     checkForShipHit(player, square);
@@ -469,7 +477,6 @@ export function ViewModel() {
 
   function checkForShipHit(player, square) {
     const squareID = square.id;
-    console.log("Square ID: " + squareID);
 
     if (player == PLAYER1) {
       allPlayer2Ships.forEach((ship) => {
@@ -555,6 +562,11 @@ export function ViewModel() {
     } else if (player == PLAYER2) {
       upperBoardArea.classList.remove("board-glow");
     }
+  }
+
+  function showAlreadyClickedMessage() {
+    modalMessage.textContent = "Already clicked!";
+    showModal();
   }
 
   function showHitMessage(player) {
