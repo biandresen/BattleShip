@@ -265,14 +265,8 @@ export function ViewModel() {
     }
 
     //Check for winner/loser
-    if (
-      player1ShipDestroyedCounter === 0 ||
-      player2ShipDestroyedCounter === 0
-    ) {
-      gameOver(player);
-    } else {
-      setTimeout(chooseTurn, 200); // Delay to ensure turn switch stability
-    }
+    if (isGameOver()) gameOver(player);
+    else setTimeout(chooseTurn, 200); // Delay to ensure turn switch stability
   }
 
   function handleShipMiss(square) {
@@ -282,20 +276,13 @@ export function ViewModel() {
   }
 
   function gameOver(player) {
-    showGameOverMessage(player);
-    setTimeout(() => {
-      displayGameOverScreen(player);
-    }, 3000);
+    view.showGameOverMessage(player);
+    setTimeout(() => view.displayGameOverScreen(player), 3000);
   }
 
   function isGameOver() {
     if (player1ShipDestroyedCounter === 0 || player2ShipDestroyedCounter === 0)
       return true;
-  }
-
-  function endGame(player) {
-    view.showGameOverMessage(player);
-    setTimeout(() => view.displayGameOverScreen(player), 3000);
   }
 
   return {
