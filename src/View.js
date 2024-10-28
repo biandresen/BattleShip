@@ -1,6 +1,6 @@
 export function View() {
   const elements = {
-    modal: document.querySelector(".ship-destroyed-modal"),
+    modal: document.querySelector(".modal"),
     modalMessage: document.querySelector(".modal-message"),
     gameModeText: document.querySelector(".game-mode-text"),
     playerTurnMessage: document.querySelector(".player-turn-message"),
