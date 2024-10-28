@@ -262,14 +262,25 @@ export function View() {
     showModal();
   }
 
-  function showDestroyedMessage(ship) {
-    elements.modalMessage.textContent = `${ship.shipType} destroyed`;
-    showModal();
-  }
-
   function colorSquareMiss(square) {
     ensureDotExists(square);
     square.firstChild.style.background = "white";
+  }
+
+  function changeDestroyedShipColor(player, actualShip) {
+    const playerUIShips = player === 1 ? player2UIShips : player1UIShips;
+
+    playerUIShips.forEach((ship) => {
+      if (ship.getAttribute("name") == actualShip.shipType) {
+        ship.classList.add("destroyed-ship");
+      }
+    });
+    showDestroyedMessage(actualShip);
+  }
+
+  function showDestroyedMessage(ship) {
+    elements.modalMessage.textContent = `${ship.shipType} destroyed`;
+    showModal();
   }
 
   function showGameOverMessage(player) {
@@ -342,6 +353,7 @@ export function View() {
     showMissMessage,
     showDestroyedMessage,
     showGameOverMessage,
+    changeDestroyedShipColor,
     displayShip,
     displayGameOverScreen,
   };

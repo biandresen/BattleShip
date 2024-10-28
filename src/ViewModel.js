@@ -293,23 +293,6 @@ export function ViewModel() {
       return true;
   }
 
-  function changeDestroyedShipColor(player, actualShip) {
-    if (player == PLAYER1) {
-      view.player2UIShips.forEach((ship) => {
-        if (ship.getAttribute("name") == actualShip.shipType) {
-          ship.classList.add("destroyed-ship");
-        }
-      });
-    } else if (player == PLAYER2) {
-      view.player1UIShips.forEach((ship) => {
-        if (ship.getAttribute("name") == actualShip.shipType) {
-          ship.classList.add("destroyed-ship");
-        }
-      });
-    }
-    view.showDestroyedMessage(actualShip);
-  }
-
   function endGame(player) {
     view.showGameOverMessage(player);
     setTimeout(() => view.displayGameOverScreen(player), 3000);

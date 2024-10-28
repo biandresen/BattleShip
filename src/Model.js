@@ -10,15 +10,8 @@ export function Model() {
     }
 
     hit() {
-      if (this.life > 0) {
-        this.life--;
-      }
-    }
-
-    isDestroyed() {
-      if (this.life <= 0) {
-        this.destroyed = true;
-      }
+      if (this.life > 0) this.life--;
+      if (this.life <= 0) this.destroyed = true;
     }
 
     isHitAtPosition(squareID) {
