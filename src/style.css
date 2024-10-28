@@ -337,8 +337,8 @@ height: 100vh; */
   grid-row: 2 / 3;
   grid-column: 2 / 3;
   display: grid;
-  grid-template-columns: repeat(10, 1fr); /* 10 equal columns */
-  grid-template-rows: repeat(10, 1fr); /* 10 equal rows */
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
   border: 1px solid black;
 }
 .matrix-item {
@@ -358,7 +358,7 @@ height: 100vh; */
   width: 9px;
   height: 9px;
   background-color: var(--primary-color);
-  border-radius: 50%; /* Makes the dot circular */
+  border-radius: 50%;
 }
 
 /* GAME OVER SCREEN */
@@ -393,7 +393,7 @@ height: 100vh; */
 .copyright-text {
   font-size: var(--small-font-size);
 }
-/* @media (min-width: 1000px) { */
+
 .ship-input {
   width: inherit;
 }
@@ -430,3 +430,5 @@ height: 100vh; */
 dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.5); /* Optional dark overlay */
 }
+
+/* @media (min-width: 1000px) { */

@@ -70,6 +70,7 @@ const allPlayer2Ships = [
   player2Ship5,
 ];
 // #endregion SHIP LISTS
+
 export function ViewModel() {
   let currentPlayer; // Starting player each turn
   let hitDetected;
@@ -176,9 +177,9 @@ export function ViewModel() {
     //First turn is random, rest is turn based.
     if (typeof currentPlayer === "undefined") {
       currentPlayer = Math.floor(Math.random() * 2) + 1;
-    } else currentPlayer = currentPlayer === 1 ? 2 : 1;
+    } else currentPlayer = currentPlayer === PLAYER1 ? 2 : 1;
 
-    if (currentPlayer === 1) player1Turn();
+    if (currentPlayer === PLAYER1) player1Turn();
     else player2Turn();
   }
 
@@ -230,26 +231,17 @@ export function ViewModel() {
 
   function checkForShipHit(player, square) {
     const squareID = square.id;
-    if (player == PLAYER1) {
-      allPlayer2Ships.forEach((ship) => {
-        if (ship.isHitAtPosition(squareID)) {
-          handleShipHit(player, ship, square);
-          hitDetected = true;
-        }
-      });
-      if (!hitDetected) {
-        handleShipMiss(square);
+    const allPlayerShips =
+      player === PLAYER1 ? allPlayer2Ships : allPlayer1Ships;
+
+    allPlayerShips.forEach((ship) => {
+      if (ship.isHitAtPosition(squareID)) {
+        handleShipHit(player, ship, square);
+        hitDetected = true;
       }
-    } else if (player == PLAYER2) {
-      allPlayer1Ships.forEach((ship) => {
-        if (ship.isHitAtPosition(squareID)) {
-          handleShipHit(player, ship, square);
-          hitDetected = true;
-        }
-      });
-      if (!hitDetected) {
-        handleShipMiss(square);
-      }
+    });
+    if (!hitDetected) {
+      handleShipMiss(square);
     }
   }
 
@@ -257,16 +249,19 @@ export function ViewModel() {
     ship.hit();
     view.colorSquareHit(square);
     view.showHitMessage(player, square);
-    if (ship.destroyed) {
-      view.changeDestroyedShipColor(player, ship);
-      view.displayShip(player, ship);
-      if (player === PLAYER1) player1ShipDestroyedCounter--;
-      else player2ShipDestroyedCounter--;
-    }
+
+    if (ship.destroyed) handleShipDestroyed(player, ship);
 
     //Check for winner/loser
     if (isGameOver()) gameOver(player);
     else setTimeout(chooseTurn, 200); // Delay to ensure turn switch stability
+  }
+
+  function handleShipDestroyed(player, ship) {
+    view.changeDestroyedShipColor(player, ship);
+    view.displayShip(player, ship);
+    if (player === PLAYER1) player1ShipDestroyedCounter--;
+    else player2ShipDestroyedCounter--;
   }
 
   function handleShipMiss(square) {
