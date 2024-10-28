@@ -267,6 +267,7 @@ height: 100vh; */
 }
 .player-name {
   font-size: var(--big-font-size);
+  color: var(--text-color);
   font-weight: 800;
 }
 
@@ -309,6 +310,7 @@ height: 100vh; */
   grid-column: 1 / 2;
 }
 .coordinate-matrix {
+  color: var(--text-color);
   font-size: var(--medium-font-size);
   font-weight: 800;
   border: 1px solid black;
