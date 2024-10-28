@@ -253,7 +253,7 @@ export function View() {
   }
 
   function showHitMessage() {
-    elements.modal.textContent = `HIT!`;
+    elements.modalMessage.textContent = "HIT!";
     showModal();
   }
 
@@ -302,7 +302,7 @@ export function View() {
     elements.modal.style.display = "block";
     setTimeout(() => {
       elements.modal.style.display = "none";
-    }, 2500);
+    }, 2000);
   }
 
   return {

@@ -211,7 +211,6 @@ export function ViewModel() {
   }
 
   function handleSquareClick(event) {
-    console.log("new click");
     let square = event.target;
     // Ensure the target is the square, not the dot inside
     if (!square.id) {
@@ -222,7 +221,6 @@ export function ViewModel() {
       view.showAlreadyClickedMessage(); // Optional message to inform the player
       return; // Exit function to allow another try
     }
-
     // Mark the square as clicked without setting a value
     square.setAttribute("data-click", "");
     const player = currentPlayer;
@@ -233,7 +231,6 @@ export function ViewModel() {
   function checkForShipHit(player, square) {
     const squareID = square.id;
     if (player == PLAYER1) {
-      console.log("player1");
       allPlayer2Ships.forEach((ship) => {
         if (ship.isHitAtPosition(squareID)) {
           handleShipHit(player, ship, square);
@@ -244,7 +241,6 @@ export function ViewModel() {
         handleShipMiss(square);
       }
     } else if (player == PLAYER2) {
-      console.log("player2");
       allPlayer1Ships.forEach((ship) => {
         if (ship.isHitAtPosition(squareID)) {
           handleShipHit(player, ship, square);
@@ -280,7 +276,6 @@ export function ViewModel() {
   }
 
   function handleShipMiss(square) {
-    console.log("miss");
     view.colorSquareMiss(square);
     view.showMissMessage();
     setTimeout(chooseTurn, 200);
