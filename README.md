@@ -2,7 +2,9 @@
 ### <a href="https://www.theodinproject.com/lessons/node-path-javascript-battleship">Project </a> from <a href="https://www.theodinproject.com/">The Odin Project</a> (module: Intermediate JS)
 ## Click here to test the application -> <a href="https://biandresen.github.io/BattleShip/">Live server of the app</a>
 #### Built with:
-* HTML, CSS, JavaScript and Vite. Used Vitest for Unit Testing.
+* HTML, CSS, JavaScript and Vite. 
+* Used Vitest for Unit Testing.
+* Used MVVM architecture.
 #### Planning tools: 
 * <a href="https://www.figma.com/">Figma</a>
 #### Project tools: 
