@@ -79,6 +79,9 @@ export function View() {
   const mainColor = getComputedStyle(document.documentElement).getPropertyValue(
     "--primary-color"
   );
+  const secondaryColor = getComputedStyle(
+    document.documentElement
+  ).getPropertyValue("--secondary-color");
   // #endregion STYLES
 
   function displayHomeScreen() {
@@ -236,6 +239,8 @@ export function View() {
 
   function showAlreadyClickedMessage() {
     elements.modalMessage.textContent = "Already clicked!";
+    elements.modalMessage.style.color = "white";
+    elements.modal.style.background = secondaryColor;
     showModal();
   }
 
@@ -259,6 +264,8 @@ export function View() {
 
   function showMissMessage() {
     elements.modalMessage.textContent = `MISS!`;
+    elements.modalMessage.style.color = "black";
+    elements.modal.style.background = "white";
     showModal();
   }
 
@@ -313,6 +320,8 @@ export function View() {
     elements.modal.style.display = "block";
     setTimeout(() => {
       elements.modal.style.display = "none";
+      elements.modalMessage.style.color = "white";
+      elements.modal.style.background = "red";
     }, 2000);
   }
 

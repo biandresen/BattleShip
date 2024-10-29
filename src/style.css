@@ -481,6 +481,10 @@ dialog::backdrop {
     height: clamp(250px, 100%, 600px);
   }
 
+  .player-turn-message {
+    font-size: var(--medium-font-size);
+  }
+
   .footer {
     font-size: var(--medium-font-size);
   }
