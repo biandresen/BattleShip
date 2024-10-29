@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Battleship</title>
+    <script type="module" crossorigin src="/assets/index-BSl5q3Rn.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-7ePgv2rS.css">
+  </head>
+  <body>
+    <div class="app">
+      <header class="header">
+        <h1 class="app-name">#BATTLESHIP</h1>
+        <p class="game-mode-text"></p>
+      </header>
+
+      <div class="content">
+        <!-- MODAL -->
+        <dialog class="modal">
+          <p class="modal-message"></p>
+        </dialog>
+        <!-- HOME SCREEN -->
+        <h2 class="top-header">
+          WELCOME <br />
+          TO <br />
+          BATTLESHIP
+        </h2>
+        <button type="button" class="pvp-button">PLAYER vs PLAYER</button>
+        <button type="button" class="pvc-button">PLAYER vs BOT</button>
+
+        <!-- GAME SCREEN -->
+        <div class="player-board-area upper-board-area">
+          <div class="upper-board-letter-row">
+            <div class="coordinate-matrix letter-row">A</div>
+            <div class="coordinate-matrix even letter-row">B</div>
+            <div class="coordinate-matrix letter-row">C</div>
+            <div class="coordinate-matrix even letter-row">D</div>
+            <div class="coordinate-matrix letter-row">E</div>
+            <div class="coordinate-matrix even letter-row">F</div>
+            <div class="coordinate-matrix letter-row">G</div>
+            <div class="coordinate-matrix even letter-row">H</div>
+            <div class="coordinate-matrix letter-row">I</div>
+            <div class="coordinate-matrix even letter-row">J</div>
+          </div>
+          <div class="upper-board-number-column">
+            <div class="coordinate-matrix number-column">1</div>
+            <div class="coordinate-matrix even number-column">2</div>
+            <div class="coordinate-matrix number-column">3</div>
+            <div class="coordinate-matrix even number-column">4</div>
+            <div class="coordinate-matrix number-column">5</div>
+            <div class="coordinate-matrix even number-column">6</div>
+            <div class="coordinate-matrix number-column">7</div>
+            <div class="coordinate-matrix even number-column">8</div>
+            <div class="coordinate-matrix number-column">9</div>
+            <div class="coordinate-matrix even number-column">10</div>
+          </div>
+          <div class="upper-player-board">
+            <!-- Board created with JS -->
+          </div>
+        </div>
+        <div class="player-score upper-player-score">
+          <p class="player-name upper-player-name"></p>
+          <div class="upper-player-ships">
+            <div class="ship upper-player-ship1" name="Carrier"></div>
+            <div class="ship upper-player-ship2" name="Battleship"></div>
+            <div class="ship upper-player-ship3" name="Cruiser"></div>
+            <div class="ship upper-player-ship4" name="Submarine"></div>
+            <div class="ship upper-player-ship5" name="Destroyer"></div>
+          </div>
+          <div class="arrange-button-box2">
+            <button class="player2-ship-arrange-button" type="button">
+              Arrange
+            </button>
+            <button class="player2-arrange-done-button" type="button">
+              Done
+            </button>
+          </div>
+        </div>
+
+        <div class="player-board-area lower-board-area">
+          <div class="lower-board-letter-row">
+            <div class="coordinate-matrix letter-row">A</div>
+            <div class="coordinate-matrix even letter-row">B</div>
+            <div class="coordinate-matrix letter-row">C</div>
+            <div class="coordinate-matrix even letter-row">D</div>
+            <div class="coordinate-matrix letter-row">E</div>
+            <div class="coordinate-matrix even letter-row">F</div>
+            <div class="coordinate-matrix letter-row">G</div>
+            <div class="coordinate-matrix even letter-row">H</div>
+            <div class="coordinate-matrix letter-row">I</div>
+            <div class="coordinate-matrix even letter-row">J</div>
+          </div>
+          <div class="lower-board-number-column">
+            <div class="coordinate-matrix number-column">1</div>
+            <div class="coordinate-matrix even number-column">2</div>
+            <div class="coordinate-matrix number-column">3</div>
+            <div class="coordinate-matrix even number-column">4</div>
+            <div class="coordinate-matrix number-column">5</div>
+            <div class="coordinate-matrix even number-column">6</div>
+            <div class="coordinate-matrix number-column">7</div>
+            <div class="coordinate-matrix even number-column">8</div>
+            <div class="coordinate-matrix number-column">9</div>
+            <div class="coordinate-matrix even number-column">10</div>
+          </div>
+          <div class="lower-player-board">
+            <!-- Board created with JS -->
+          </div>
+        </div>
+        <div class="player-score lower-player-score">
+          <p class="player-name lower-player-name">Player 1</p>
+          <div class="lower-player-ships">
+            <div class="ship lower-player-ship1" name="Carrier"></div>
+            <div class="ship lower-player-ship2" name="Battleship"></div>
+            <div class="ship lower-player-ship3" name="Cruiser"></div>
+            <div class="ship lower-player-ship4" name="Submarine"></div>
+            <div class="ship lower-player-ship5" name="Destroyer"></div>
+          </div>
+          <div class="arrange-button-box1">
+            <button class="player1-ship-arrange-button" type="button">
+              Arrange
+            </button>
+            <button class="player1-arrange-done-button" type="button">
+              Done
+            </button>
+          </div>
+        </div>
+
+        <p class="player-turn-message"></p>
+
+        <!-- GAME OVER SCREEN -->
+        <!-- <h2 class="top-header">Game Over</h2> -->
+        <h2 class="bottom-header">
+          Winner: <br />
+          X
+        </h2>
+        <button type="button" class="replay-button">PLAY AGAIN</button>
+      </div>
+
+      <footer class="footer">
+        <p class="copyright-text">
+          Copyright © 2024 Birger Andresen
+          <a
+            href="https://github.com/biandresen"
+            target="_blank"
+            rel="noopener"
+            aria-label="GitHub Profile"
+          >
+            <i class="fab fa-github"></i>
+          </a>
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>
